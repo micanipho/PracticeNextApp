@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "name": "John Doe ",
+      "email": "john@test.com",
+      "password": "690cba9c6910330bfa6ab867b281e575faee5acd8f919ab637e767b041050f1a91f52170c5f12906bc8dfbd3781a53a221432b07cb24722f3e35a294698c1870",
+      "salt": "07e480d31c64424c59be09d10f5a4973",
+      "role": "user",
+      "token": "token_1771858240408",
+      "id": "c6674cd2-b0a7-4335-8b37-1b446460d23c",
+      "createdAt": "2026-02-23T14:50:40.408Z"
+    }
+  ]
+}
