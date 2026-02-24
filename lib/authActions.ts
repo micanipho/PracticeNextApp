@@ -3,12 +3,14 @@
 import { db } from "./db";
 import { comparePassword, hashPassword } from "./utils";
 import { createUserSession, deleteUserSession, getUserSession } from "./session";
-import { IAuthSignIn, IAuthSignUp, IAuthUser } from "@/app/providers/authProvider/context";
+import { IAuthSignIn, IAuthSignUp, IAuthUser } from "@/providers/authProvider/context";
 
+
+const { users } = db;
 
 export async function signInAction(payload: IAuthSignIn) {
     try {
-        const user = db.users.findUnique({ email: payload.email });
+        const user = users.findUnique({ email: payload.email });
 
         if (!user) {
             return { error: true, errorMessage: "User not found" };
@@ -34,7 +36,7 @@ export async function signInAction(payload: IAuthSignIn) {
 
 export async function signUpAction(payload: IAuthSignUp) {
     try {
-        const existingUser = db.users.findUnique({ email: payload.email });
+        const existingUser = users.findUnique({ email: payload.email });
 
         if (existingUser) {
             return { error: true, errorMessage: "User already exists" };
@@ -56,7 +58,7 @@ export async function signUpAction(payload: IAuthSignUp) {
             token 
         };
 
-        const savedUser = db.users.create(newUser);
+        const savedUser = users.create(newUser);
         await createUserSession(savedUser);
 
         // Remove sensitive fields
@@ -83,7 +85,7 @@ export async function getAuthAction() {
         const session = await getUserSession();
         if (!session) return null;
 
-        const user = db.users.findUnique({ id: session.userId });
+        const user = users.findUnique({ id: session.userId });
         if (!user) return null;
 
         const { password, salt, ...safeUser } = user;

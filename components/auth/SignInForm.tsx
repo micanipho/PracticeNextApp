@@ -3,7 +3,7 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import { useStyles } from './style/style';
 import Link from 'next/link';
-import { useAuthActions } from '@/app/providers/authProvider';
+import { useAuthActions } from '@/providers/authProvider';
 
 const SignInForm: React.FC = () => {
   const actions = useAuthActions();

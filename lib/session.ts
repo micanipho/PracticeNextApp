@@ -1,9 +1,7 @@
-import { IAuthUser } from "@/app/providers/authProvider/context";
+import { IAuthUser } from "@/providers/authProvider/context";
 import { cookies } from "next/headers";
 
-// lib/session.ts
-
-const SESSION_SECRET = process.env.SESSION_SECRET || 'a-very-secret-key-that-should-be-in-env-and-be-long-enough';
+const SESSION_SECRET = process.env.SESSION_SECRET || 'a-secret-key-that-should-be-in-env-and-be-long-enough';
 const COOKIE_NAME = 'session';
 
 type sessionSchema = {
@@ -15,7 +13,7 @@ type sessionSchema = {
 /**
  * Derives an encryption key from the secret
  */
-async function getEncryptionKey() {
+const getEncryptionKey = async () => {
     const enc = new TextEncoder();
     const keyMaterial = await crypto.subtle.importKey(
         'raw',
@@ -41,7 +39,7 @@ async function getEncryptionKey() {
 /**
  * Encrypts a string using Web Crypto AES-GCM
  */
-async function encrypt(text: string) {
+const encrypt = async (text: string) => {
     const enc = new TextEncoder();
     const iv = crypto.getRandomValues(new Uint8Array(12));
     const key = await getEncryptionKey();
@@ -57,13 +55,13 @@ async function encrypt(text: string) {
     buffer.set(new Uint8Array(encrypted), iv.length);
     
     // Return base64 encoded string
-    return btoa(String.fromCharCode(...buffer));
+    return btoa(String.fromCodePoint(...buffer));
 }
 
 /**
  * Decrypts a string using Web Crypto AES-GCM
  */
-async function decrypt(token: string) {
+const decrypt = async (token: string) => {
     try {
         const buffer = Uint8Array.from(atob(token), c => c.charCodeAt(0));
         const iv = buffer.slice(0, 12);
@@ -78,6 +76,7 @@ async function decrypt(token: string) {
 
         return new TextDecoder().decode(decrypted);
     } catch (error) {
+        console.error("Failed to decrypt session cookie:", error);
         return null;
     }
 }
@@ -116,6 +115,7 @@ export const getUserSession = async (): Promise<sessionSchema | null> => {
     try {
         return JSON.parse(decrypted);
     } catch (e) {
+        console.error("Failed to parse session cookie:", e);
         return null;
     }
 }
@@ -125,27 +125,3 @@ export const deleteUserSession = async () => {
     cookieStore.delete(COOKIE_NAME);
 }
 
-/**
- * Refreshes the session expiry if it exists
- */
-export const updateSession = async () => {
-    const session = await getUserSession();
-    if (!session) return null;
-
-    const cookieStore = await cookies();
-    const cookie = cookieStore.get(COOKIE_NAME);
-    if (!cookie) return null;
-
-    cookieStore.set({
-        name: COOKIE_NAME,
-        value: cookie.value,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 7,
-        expires: new Date(Date.now() + 60 * 60 * 24 * 7 * 1000),
-        path: '/',
-    });
-    
-    return session;
-}

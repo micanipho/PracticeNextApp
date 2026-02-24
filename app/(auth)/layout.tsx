@@ -1,4 +1,5 @@
-import React from 'react';
+import { Layout } from 'antd';
+import { Content } from 'antd/es/layout/layout';
 
 export default function AuthLayout({
   children,
@@ -6,8 +7,8 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      {children}
-    </>
+    <Layout>
+      <Content>{children}</Content>
+    </Layout>
   );
 }

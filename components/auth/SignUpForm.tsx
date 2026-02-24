@@ -5,7 +5,7 @@ import { Form, Input, Button, Checkbox, Typography } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { useStyles } from './style/style';
 import Link from 'next/link';
-import { useAuthActions } from '@/app/providers/authProvider';
+import { useAuthActions } from '@/providers/authProvider';
 
 const { Title, Text } = Typography;
 

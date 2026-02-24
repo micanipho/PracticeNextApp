@@ -3,12 +3,12 @@
     {
       "name": "John Doe ",
       "email": "john@test.com",
-      "password": "690cba9c6910330bfa6ab867b281e575faee5acd8f919ab637e767b041050f1a91f52170c5f12906bc8dfbd3781a53a221432b07cb24722f3e35a294698c1870",
-      "salt": "07e480d31c64424c59be09d10f5a4973",
+      "password": "9ab7277616f41c1e00f139d3cbb9b9603a826b48becd60bfb063c4e93d1c3aa1f5d01e399d6dee9a4264d1c00c78493921a70e6244feb0bc90c5bde9a44d96af",
+      "salt": "00c7907c49d161308e5c646372a4f6f3",
       "role": "user",
-      "token": "token_1771858240408",
-      "id": "c6674cd2-b0a7-4335-8b37-1b446460d23c",
-      "createdAt": "2026-02-23T14:50:40.408Z"
+      "token": "token_1771870253267",
+      "id": "3f40a087-fa4b-40d5-8825-c96b1eba7be0",
+      "createdAt": "2026-02-23T18:10:53.270Z"
     }
   ]
 }

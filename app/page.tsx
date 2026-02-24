@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -12,16 +13,12 @@ export default function Home() {
           priority
         />
         <div>
-          <a
-            href="/sign-in"
-          >
+          <Link href="/sign-in">
             Sign In
-          </a>
-          <a
-            href="/sign-up"
-          >
+          </Link>
+          <Link href="/sign-up">
             Sign Up
-          </a>
+          </Link>
         </div>
       </main>
     </div>
